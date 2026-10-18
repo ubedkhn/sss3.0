@@ -16,7 +16,7 @@ export type OutputType = {
 };
 
 export const getProjectReviews = async (projectId: string, init?: RequestInit): Promise<OutputType> => {
-  const url = new URL("/_api/project_reviews", window.location.origin);
+  const url = new URL("/api/project_reviews", window.location.origin);
   url.searchParams.set("projectId", projectId);
   const r = await fetch(url.toString(), { method: "GET", ...init });
   if (!r.ok) throw new Error((await r.text()) || "Could not load reviews");
