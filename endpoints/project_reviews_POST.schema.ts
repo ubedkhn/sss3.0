@@ -13,7 +13,7 @@ export type InputType = z.infer<typeof schema>;
 export type OutputType = { success: boolean };
 
 export const postProjectReview = async (body: InputType, init?: RequestInit): Promise<OutputType> => {
-  const r = await fetch("/_api/project_reviews", {
+  const r = await fetch("/api/project_reviews", {
     method: "POST",
     body: superjson.stringify(schema.parse(body)),
     ...init,
