@@ -1,0 +1,2 @@
+import {db} from "../helpers/db"; import superjson from "superjson";
+export async function handle(){const projects=await db.selectFrom("projects").selectAll().where("published","=",true).orderBy("year","desc").execute();return new Response(superjson.stringify({projects:projects.map(p=>({...p,id:String(p.id)}))}));}

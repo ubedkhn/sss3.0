@@ -1,0 +1,4 @@
+import {z} from "zod"; import superjson from "superjson";
+export const schema=z.object({name:z.string().min(2),email:z.string().email().optional(),phone:z.string().optional(),projectScope:z.string().min(2),geographicLocation:z.string().min(2),desiredTimeline:z.string().min(2),investmentRange:z.string().min(2),message:z.string().optional()});
+export type InputType=z.infer<typeof schema>; export type OutputType={success:boolean};
+export const postInquiry=async(body:InputType,init?:RequestInit):Promise<OutputType>=>{const v=schema.parse(body);const r=await fetch("/_api/inquiries",{method:"POST",body:superjson.stringify(v),...init,headers:{"Content-Type":"application/json",...(init?.headers||{})}});if(!r.ok)throw new Error((await r.text())||"Could not submit inquiry");return superjson.parse<OutputType>(await r.text());};

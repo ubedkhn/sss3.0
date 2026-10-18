@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --z-overlay: 400;
+  --z-spotlight: 1000;
+  --z-critical: 2000;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+}
+
+:root {
+  --background: #F3EEE5;
+  --foreground: #241E19;
+  --surface: #EAE2D6;
+  --surface-foreground: #241E19;
+  --sidebar: #EEE7DC;
+  --sidebar-foreground: #241E19;
+  --card: #F7F3EC;
+  --card-foreground: #241E19;
+  --popup: #FBF8F2;
+  --popup-foreground: #241E19;
+  --primary: #241E19;
+  --primary-foreground: #F7F3EC;
+  --secondary: #D8CDBD;
+  --secondary-foreground: #241E19;
+  --accent: #9A7650;
+  --accent-foreground: #FBF8F2;
+  --muted: #DED5C8;
+  --muted-foreground: #756B60;
+  --success: #65705A;
+  --success-foreground: #FBF8F2;
+  --error: #8A4D43;
+  --error-foreground: #FBF8F2;
+  --warning: #A47A43;
+  --warning-foreground: #241E19;
+  --info: #66727A;
+  --info-foreground: #FBF8F2;
+  --info-hover: #56626A;
+  --info-active: #465159;
+  --border: #CFC4B5;
+  --font-family-base: 'Inter', sans-serif;
+  --font-family-display: 'DM Serif Display', serif;
+  --font-family-monospace: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-family-cursive: cursive;
+  --shadow: 0 1px 3px rgba(36,30,25,.06);
+  --shadow-md: 0 8px 24px rgba(36,30,25,.08);
+  --shadow-lg: 0 18px 50px rgba(36,30,25,.10);
+  --shadow-focus: 0 0 0 3px rgba(154,118,80,.25);
+  --radius-sm: 0;
+  --radius: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-full: 9999px;
+  --animation-duration-fast: 160ms;
+  --animation-duration-normal: 280ms;
+  --animation-duration-slow: 600ms;
+  --chart-color-1: #9A7650;
+  --chart-color-2: #6F6254;
+  --chart-color-3: #A99B8A;
+  --chart-color-4: #4D443C;
+  --chart-color-5: #C8BBA9;
+}
+
+.dark {
+  --background: #211C18;
+  --foreground: #F3EEE5;
+  --surface: #2B241F;
+  --surface-foreground: #F3EEE5;
+  --sidebar: #2B241F;
+  --sidebar-foreground: #F3EEE5;
+  --card: #302923;
+  --card-foreground: #F3EEE5;
+  --popup: #332C26;
+  --popup-foreground: #F3EEE5;
+  --primary: #F3EEE5;
+  --primary-foreground: #241E19;
+  --secondary: #463B31;
+  --secondary-foreground: #F3EEE5;
+  --accent: #B99367;
+  --accent-foreground: #211C18;
+  --muted: #40372F;
+  --muted-foreground: #B7AA9A;
+  --border: #55493E;
+}

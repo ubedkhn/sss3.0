@@ -1,0 +1,21 @@
+import {Helmet} from "react-helmet";
+import {Link} from "react-router-dom";
+import SiteLayout from "../components/SiteLayout";
+import styles from "./services.module.css";
+
+const services=[
+ ["01","Homes, Flats & Villas","Residential interiors for 1BHK, 2BHK, 3BHK, penthouses, villas and independent houses.",["Space planning & interior architecture","Living, bedroom & pooja room design","Custom kitchens, wardrobes & joinery","Lighting, finishes, furniture & styling"]],
+ ["02","Kitchens & Room Interiors","Focused design when the brief is one important part of a property rather than the entire home.",["Modular kitchen planning","Bedroom & wardrobe design","Living room composition","Pooja room & focused renovations"]],
+ ["03","Shops & Retail","Customer-facing environments designed around circulation, display, brand expression and practical operations.",["Boutiques & fashion stores","Jewellery & speciality retail","Salons & grocery marts","Display, lighting & customer flow"]],
+ ["04","Offices & Hospitality","Commercial interiors for teams, clients and guests, from compact workplaces to hospitality environments.",["Corporate & co-working offices","Reception & conference spaces","Cafes & restaurants","Cloud kitchens & boutique hospitality"]],
+ ["05","Renovation & Remodeling","Existing spaces assessed before design decisions are made, with attention to services, structure and what can be retained.",["Existing-space assessment","Layout & finish upgrades","Kitchen & bathroom refurbishment","Furniture, lighting & styling updates"]],
+ ["06","Turnkey Execution","A coordinated route from approved design to procurement, fabrication, installation and handover.",["Vendor & procurement coordination","Custom fabrication oversight","Site supervision","Installation & final handover"]]
+];
+
+export default function Services(){return <SiteLayout>
+ <Helmet><title>Interior Design Services in Indore, Dewas & MP | Residential & Commercial</title><meta name="description" content="Interior design services for homes, flats, villas, kitchens, bedrooms, living rooms, shops, offices, cafes and commercial spaces in Indore, Dewas, Bhopal, Ujjain and Madhya Pradesh."/></Helmet>
+ <section className={styles.intro}><div className={styles.introGraphic} aria-hidden="true"><span></span><i></i><b></b></div><p>SCOPE OF WORK · MADHYA PRADESH</p><h1>Interior design for the spaces people live, work, shop and gather in.</h1><span className={styles.introNote}>Residential, room-specific and commercial interiors with design development, material planning and execution support.</span></section>
+ <section className={styles.servicesGrid}>{services.map(s=><article className={styles.tier} key={s[0] as string}><div className={styles.visual} aria-hidden="true"><div className={styles.orbit}></div><div className={styles.orbitSmall}></div><div className={styles.core}>{s[0]}</div></div><div className={styles.serviceBody}><div className={styles.num}>{s[0]}</div><h2>{s[1]}</h2><p>{s[2]}</p></div><ul>{(s[3] as string[]).map((x,i)=><li key={x}><span>0{i+1}</span>{x}<b>↗</b></li>)}</ul></article>)}</section>
+ <section className={styles.invest}><div className={styles.investGraphic} aria-hidden="true"><span></span><span></span><span></span></div><div><p>INVESTMENT PHILOSOPHY</p><h2>Budget conversations should happen before material decisions.</h2></div><p>We work across different project scales. Pricing is shaped by property type, area, scope, materials, custom work and execution requirements, so the studio provides a project-specific estimate rather than a misleading universal package price. For budget-sensitive briefs, we can prioritise the spaces and elements that matter most.</p></section>
+ <section className={styles.serviceCta}><p>READY TO DISCUSS A SPACE?</p><h2>Tell us whether it is a home, room, shop, office or hospitality project.</h2><div><Link to="/contact">Request a consultation ↗</Link><a href="https://wa.me/919074530701?text=Hello%20Shri%20Sawariya%20Seth%20Interior%20Designs%2C%20I%20want%20to%20discuss%20an%20interior%20project.">Chat on WhatsApp ↗</a></div></section>
+ </SiteLayout>}

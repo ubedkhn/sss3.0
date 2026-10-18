@@ -1,0 +1,41 @@
+import { useMemo, useState } from "react";
+import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getProjects } from "../endpoints/projects_GET.schema";
+import SiteLayout from "../components/SiteLayout";
+import { useLuxuryMotion } from "../helpers/useLuxuryMotion";
+import styles from "./portfolio.module.css";
+
+const filters = ["All Spaces", "Residential", "Commercial", "Kitchens", "Living Rooms"];
+const conceptStudies = [
+  {filter:"Commercial",type:"RETAIL · VISUAL STUDY",title:"Contemporary Jewellery Boutique",location:"Indore, Madhya Pradesh",image:"https://f7e1eaf0-74c7-4c48-bd3a-7f925db03bf6.sandbox.floot.app/_cdn/static/0817f679-a92c-4271-b696-37504f133a84.png",description:"Warm stone, walnut, glass and restrained brass create a calm gallery-like retail environment while keeping circulation and display visibility practical."},
+  {filter:"Commercial",type:"OFFICE · VISUAL STUDY",title:"Warm Corporate Reception",location:"Bhopal, Madhya Pradesh",image:"https://f7e1eaf0-74c7-4c48-bd3a-7f925db03bf6.sandbox.floot.app/_cdn/static/4864801c-4af7-4324-b0a0-79874c19ef25.png",description:"A contemporary Indian workplace reception balancing acoustic comfort, timber warmth and practical meeting zones around the first client impression."},
+  {filter:"Kitchens",type:"MODULAR KITCHEN · VISUAL STUDY",title:"Sage & Walnut Kitchen",location:"Indore, Madhya Pradesh",image:"https://f7e1eaf0-74c7-4c48-bd3a-7f925db03bf6.sandbox.floot.app/_cdn/static/9a8a2674-06d5-4d20-b074-e5d98d3cacf9.png",description:"A premium 3BHK kitchen direction planned around Indian cooking workflow, generous storage, a tall pantry and durable quartz worktops."},
+  {filter:"Kitchens",type:"COMPACT KITCHEN · VISUAL STUDY",title:"Compact Apartment Kitchen",location:"Dewas, Madhya Pradesh",image:"https://f7e1eaf0-74c7-4c48-bd3a-7f925db03bf6.sandbox.floot.app/_cdn/static/e3d1d5e6-a8f1-430a-9b61-9b6659ad14df.png",description:"A compact Indian apartment kitchen using dedicated appliance storage, durable surfaces and a lighter palette without sacrificing everyday function."},
+  {filter:"Living Rooms",type:"LIVING ROOM · VISUAL STUDY",title:"Courtyard Warmth",location:"Near Dewas, Madhya Pradesh",image:"https://f7e1eaf0-74c7-4c48-bd3a-7f925db03bf6.sandbox.floot.app/_cdn/static/229b3818-2f26-4eb7-bec3-bbd5c832a874.png",description:"An Indian family living room built around warm neutrals, natural timber, handcrafted accents and layered lighting for comfortable daily use."},
+  {filter:"Living Rooms",type:"LIVING ROOM · VISUAL STUDY",title:"Fluted Wood Apartment Lounge",location:"Indore, Madhya Pradesh",image:"https://f7e1eaf0-74c7-4c48-bd3a-7f925db03bf6.sandbox.floot.app/_cdn/static/812ffa3f-7b4d-4079-a089-2ff617405c8d.png",description:"A practical apartment lounge combining a curved sofa, fluted timber partition, integrated storage and a subtle pooja niche."}
+];
+function matchesFilter(project:any, filter:string) {
+  if (filter === "All Spaces") return true;
+  if (filter === "Residential") return project.projectType === "Residential" || project.projectType === "New Builds" || project.projectType === "Restoration";
+  if (filter === "Commercial") return ["Commercial","Retail & Shops","Offices","Hospitality"].includes(project.projectType) || /commercial|shop|office|retail|cafe|restaurant/i.test(project.category || "");
+  return project.projectType === filter || new RegExp(filter === "Kitchens" ? "kitchen" : "living", "i").test([project.name,project.category,project.vision,project.narrative].filter(Boolean).join(" "));
+}
+export default function Portfolio() {
+  const q = useQuery({ queryKey: ["projects"], queryFn: getProjects });
+  const [filter, setFilter] = useState("All Spaces");
+  const projects = useMemo(() => (q.data?.projects ?? []).filter((p:any) => matchesFilter(p,filter)), [q.data,filter]);
+  const studies = useMemo(() => filter === "All Spaces" ? conceptStudies : conceptStudies.filter((item) => item.filter === filter), [filter]);
+  useLuxuryMotion(filter + "-" + projects.map((project:any) => project.id).join(","));
+  return <SiteLayout>
+    <Helmet><title>Interior Design Portfolio | Homes, Commercial, Kitchens & Living Rooms | Shri Sawariya Seth</title><meta name="description" content="Explore interior design projects and visual studies across residential homes, flats, villas, commercial spaces, kitchens and living rooms in Madhya Pradesh." /></Helmet>
+    <header className={styles.masthead}><div className={styles.mastCopy}><p className={styles.kicker}>PORTFOLIO · SPACES & PROJECTS</p><h1>From complete properties to the rooms that make them work.</h1><p className={styles.intro}>Browse the studio archive by space type. Residential homes, commercial environments and focused room projects are presented with local context so visitors can understand what was designed, where it was designed and the scope involved.</p></div><div className={styles.mastNote}><span>01</span><p>Homes & apartments<br/>Commercial spaces<br/>Kitchens & living rooms</p></div><div className={styles.mastGraphic} aria-hidden="true"><span></span><i></i><b></b></div></header>
+    <nav className={styles.filters} aria-label="Portfolio filters"><span>FILTER BY SPACE</span>{filters.map(item=><button key={item} className={filter===item?styles.active:""} onClick={()=>setFilter(item)}>{item}</button>)}</nav>
+    <main className={styles.grid}>{q.isFetching&&<p className={styles.loading}>Curating the archive…</p>}{projects.map((project:any,index:number)=><Link to={"/portfolio/"+project.slug} className={styles.card+(index%3===1?" "+styles.offset:"")} data-tilt-card key={project.id}><div className={styles.imageWrap} data-parallax-container><img data-parallax-image src={project.coverImageUrl} alt={project.heroAltText||project.name+" interior design project in "+project.location}/><span className={styles.index}>{String(index+1).padStart(2,"0")}</span></div><div className={styles.cardMeta}><div><span>{project.location}</span><span>{project.projectType}</span></div><h2>{project.name}</h2><p>{project.vision||project.narrative}</p><span className={styles.view}>View case study ↗</span></div></Link>)}</main>
+    {!q.isFetching&&projects.length===0&&<div className={styles.empty}><strong>No published {filter.toLowerCase()} case studies yet.</strong><span>We can add tagged kitchen, living room and commercial projects through the portfolio CMS as those projects are documented.</span><Link to="/contact">Discuss a project ↗</Link></div>}
+    {studies.length>0&&<section className={styles.studies}><div className={styles.studiesHead}><div><p className={styles.kicker}>SPACE STUDIES</p><h2>Indian interiors, shown with context.</h2></div><p>These photorealistic visual studies communicate design direction and material thinking. They are intentionally separate from the published project archive and are not presented as completed client work.</p></div><div className={styles.studyGrid}>{studies.map(study=><article className={styles.studyCard} data-tilt-card key={study.title}><div className={styles.studyImage} data-parallax-container><img data-parallax-image src={study.image} alt={study.title+" interior design visual study in "+study.location}/><span>VISUAL STUDY</span></div><div className={styles.studyMeta}><p>{study.type}</p><h3>{study.title}</h3><span>{study.location}</span><div>{study.description}</div></div></article>)}</div></section>}
+    <section className={styles.beforeAfter}><div><p className={styles.kicker}>BEFORE & AFTER</p><h2>Documenting the change, not only the finished photograph.</h2></div><p>Where before-and-after media is available, case studies can show the raw site alongside the completed interior. This gives prospective clients a clearer view of the design and execution scope.</p></section>
+    <section className={styles.closing}><p className={styles.kicker}>LOCAL CONTEXT</p><h2>Design is more useful when you can see where it was made.</h2><p>Project locations are presented alongside each case study to help clients across Indore, Dewas, Bhopal, Ujjain and surrounding Madhya Pradesh areas understand the studio's regional coverage.</p><Link to="/contact">Discuss a commission ↗</Link></section>
+  </SiteLayout>;
+}
