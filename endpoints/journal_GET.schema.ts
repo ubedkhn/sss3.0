@@ -1,3 +1,3 @@
 import superjson from "superjson";
 export type OutputType={posts:Array<{id:string;title:string;slug:string;excerpt:string;body:string;coverImageUrl:string|null;publishedAt:Date|null}>};
-export const getJournal=async(init?:RequestInit):Promise<OutputType>=>{const r=await fetch("/_api/journal",{method:"GET",...init});if(!r.ok)throw new Error((await r.text())||"Could not load journal");return superjson.parse<OutputType>(await r.text());};
+export const getJournal=async(init?:RequestInit):Promise<OutputType>=>{const r=await fetch("/api/journal",{method:"GET",...init});if(!r.ok)throw new Error((await r.text())||"Could not load journal");return superjson.parse<OutputType>(await r.text());};
