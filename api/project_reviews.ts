@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import superjson from "superjson";
-import { supabaseRest } from "./_lib/supabaseRest";
+import { supabaseRest } from "./_lib/supabaseRest.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
