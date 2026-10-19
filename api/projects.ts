@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import superjson from "superjson";
-import { supabaseRest } from "./_lib/supabaseRest";
+import { supabaseRest } from "./_lib/supabaseRest.js";
 
 function toFrontendProject(row: Record<string, any>) {
   return {
