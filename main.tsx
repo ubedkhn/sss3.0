@@ -12,6 +12,7 @@ import ContactPage from "./pages/contact";
 import JournalPage from "./pages/journal";
 import AdminPage from "./pages/admin";
 import LoginPage from "./pages/login";
+import ResetPasswordPage from "./pages/reset-password";
 import "./base.css";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/journal" element={<JournalPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </GlobalContextProviders>
