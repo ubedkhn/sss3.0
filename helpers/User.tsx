@@ -7,7 +7,7 @@
 // together with this in one toolcall.
 
 export interface User {
-  id: number;
+  id: string;
   email: string;
   displayName: string;
   avatarUrl: string | null;
