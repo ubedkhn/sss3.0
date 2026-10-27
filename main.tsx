@@ -12,7 +12,17 @@ import ContactPage from "./pages/contact";
 import JournalPage from "./pages/journal";
 import AdminPage from "./pages/admin";
 import LoginPage from "./pages/login";
+import ResetPasswordPage from "./pages/reset-password";
 import "./base.css";
+
+// Supabase dashboard recovery links may land on the Site URL with tokens in the hash.
+// Redirect only recovery links to the reset form, preserving the token fragment.
+if (typeof window !== "undefined" && window.location.pathname === "/") {
+  const recoveryParams = new URLSearchParams(window.location.hash.slice(1));
+  if (recoveryParams.get("type") === "recovery" && recoveryParams.get("access_token")) {
+    window.history.replaceState(null, "", "/reset-password" + window.location.hash);
+  }
+}
 
 function App() {
   return (
@@ -29,6 +39,7 @@ function App() {
           <Route path="/journal" element={<JournalPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </GlobalContextProviders>
