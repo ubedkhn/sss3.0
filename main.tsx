@@ -15,6 +15,15 @@ import LoginPage from "./pages/login";
 import ResetPasswordPage from "./pages/reset-password";
 import "./base.css";
 
+// Supabase dashboard recovery emails may redirect to Site URL (/) with tokens in the URL hash.
+// Route recovery links to the reset form while preserving the hash tokens for validation.
+if (typeof window !== "undefined" && window.location.pathname === "/") {
+  const recoveryParams = new URLSearchParams(window.location.hash.slice(1));
+  if (recoveryParams.get("type") === "recovery" && recoveryParams.get("access_token")) {
+    window.history.replaceState(null, "", "/reset-password" + window.location.hash);
+  }
+}
+
 function App() {
   return (
     <BrowserRouter>
